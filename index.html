@@ -1,11 +1,85 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Mesto</title>
-    <link rel="stylesheet" href="./style.css">
-</head>
-<body>
-    <header class="header"></header>
-</body>
-</html> 
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Mesto</title>
+        <link rel="stylesheet" href="./pages/index.css" />
+    </head>
+    <body class="body">
+        <div class="page">
+            <header class="header">
+                <a href="#" class="header__link" target="_self"><img src="./images/logo.svg" class="header__logo" alt="Логотип Mesto" /></a>
+            </header>
+            <main class="content">
+                <section class="profile">
+                    <img src="./images/kusto.jpg" class="profile__avatar" alt="Фото Кусто" />
+                    <div class="profile__info">
+                        <div class="profile__name-edit">
+                            <h1 class="profile__name">Жак-Ив Кусто</h1>
+                            <button class="profile__edit-button" type="button" aria-label="Редактировать"></button>
+                        </div>
+
+                        <p class="profile__description">Исследователь океана</p>
+                    </div>
+                    <button class="profile__add-button" type="button" aria-label="Добавить"></button>
+                </section>
+                <section class="elements">
+                    <article class="element">
+                        <img src="./images/001.jpg" alt="Карачаевск" class="element__image" />
+                        <h2 class="element__title">Карачаевск</h2>
+                        <button class="element__heart" type="button"></button>
+                    </article>
+
+                    <article class="element">
+                        <img src="./images/002.jpg" alt="Гора Эльбрус" class="element__image" />
+                        <h2 class="element__title">Гора Эльбрус</h2>
+                        <button class="element__heart" type="button"></button>
+                    </article>
+
+                    <article class="element">
+                        <img src="./images/003.jpg" alt="Домбай" class="element__image" />
+                        <h2 class="element__title">Домбай</h2>
+                        <button class="element__heart" type="button"></button>
+                    </article>
+
+                    <article class="element">
+                        <img src="./images/004.jpg" alt="Гора Эльбрус" class="element__image" />
+                        <h2 class="element__title">Гора Эльбрус</h2>
+                        <button class="element__heart" type="button"></button>
+                    </article>
+
+                    <article class="element">
+                        <img src="./images/005.jpg" alt="Домбай" class="element__image" />
+                        <h2 class="element__title">Домбай</h2>
+                        <button class="element__heart" type="button"></button>
+                    </article>
+
+                    <article class="element">
+                        <img src="./images/006.jpg" alt="Карачаево-Черкессия" class="element__image" />
+                        <h2 class="element__title">Карачаево-Черкессия</h2>
+                        <button class="element__heart" type="button"></button>
+                    </article>
+                </section>
+            </main>
+            <footer class="footer">
+                &copy; 2020 Mesto Russia
+            </footer>
+        </div>
+        <div class="popup">
+            <div class="popup__container">
+                <button class="popup__button-close" type="button" aria-label="Закрыть попап"></button>
+                <h3 class="popup__title">Редактировать профиль</h3>
+
+                <form class="popup__form" name="popup">
+                    <input type="text" class="popup__field popup__field_name" name="name" value="Жак-Ив Кусто" placeholder="Как его?" required />
+                    <input type="text" class="popup__field popup__field_description" name="description" value="Исследователь океана" placeholder="Кто это?" required />
+                    <button class="popup__button-save" type="submit" aria-label="Сохранить изменения">
+                        Сохранить
+                    </button>
+                </form>
+            </div>
+        </div>
+    <script src="./scripts/main.js"></script>
+    </body>
+</html>
