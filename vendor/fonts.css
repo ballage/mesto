@@ -1,34 +1,32 @@
 @font-face {
-    font-family: 'Inter';
-    font-weight: 400;
-    font-style: normal;
-    src: local("Inter"),
-       /* Если не получилось, загрузит woff2 */
-       url("./fonts/Inter-Regular.woff2") format("woff2"),
-       /* Если браузер не поддерживает woff2, загрузит woff */
-       url("./fonts/Inter-Regular.woff") format("woff");
+       font-family: 'Inter';
+       font-weight: 400;
+       font-style: normal;
+       src: local("Inter"),
+              /* Если не получилось, загрузит woff2 */
+              url("./fonts/Inter-Regular.woff2") format("woff2"),
+              /* Если браузер не поддерживает woff2, загрузит woff */
+              url("./fonts/Inter-Regular.woff") format("woff");
 }
     
     
     
-@font-face {
-    
-    font-family: 'Inter';
-    font-weight: 500;
-    font-style: medium;
-    src: local("Inter"),
-       /* Если не получилось, загрузит woff2 */
-       url("./fonts/Inter-Medium.woff2") format("woff2"),
-       /* Если браузер не поддерживает woff2, загрузит woff */
-       url("./fonts/Inter-Black.woff") format("woff");
+@font-face {   
+       font-family: 'Inter';
+       font-weight: 500;
+       font-style: normal;
+       src: local("Inter"),
+              /* Если не получилось, загрузит woff2 */
+              url("./fonts/Inter-Medium.woff2") format("woff2"),
+              /* Если браузер не поддерживает woff2, загрузит woff */
+              url("./fonts/Inter-Medium.woff") format("woff");
 }
         
 
 @font-face {
-    
        font-family: 'Inter';
        font-weight: 900;
-       font-style: black;
+       font-style: normal;
        src: local("Inter"),
               /* Если не получилось, загрузит woff2 */
               url("./fonts/Inter-Black.woff2") format("woff2"),
