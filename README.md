@@ -7,4 +7,4 @@
 Сайт полностью свёрстан с применением языка разметки HTML и стилей CSS, С помощью JavaScript реализовано открытие и закрытие popup-окна, перенос имени и описания героя.
 
 ## Ссылка на проект на GitHub Pages
-[Место](https://ballage.github.io/mesto/)
+[Место](https://ballage.github.io/mesto/index.html)
