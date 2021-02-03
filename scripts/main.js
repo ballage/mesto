@@ -10,6 +10,9 @@ let formElement = popup.querySelector('.popup__form');// нашли форму
 let nameInput = formElement.querySelector('.popup__field_name');// Воспользуйтесь инструментом .querySelector()
 let jobInput = formElement.querySelector('.popup__field_description');// Воспользуйтесь инструментом .querySelector()
 
+let profileName = document.querySelector('.profile__name');
+let profileDescription = document.querySelector('.profile__description');
+
 let togglePopup = function () { //Открываем-закрываем popup
     popup.classList.toggle('popup_opened');
 }
@@ -18,8 +21,8 @@ let togglePopup = function () { //Открываем-закрываем popup
 const justOpen = function  () {  // открываем popup и подгружаем в него данные со страницы
     
 
-    nameInput.value = document.querySelector('.profile__name').textContent;
-    jobInput.value = document.querySelector('.profile__description').textContent;
+    nameInput.value = profileName.textContent;
+    jobInput.value = profileDescription.textContent;
     
     togglePopup ();
 }
@@ -30,8 +33,8 @@ const justOpen = function  () {  // открываем popup и подгружа
 function formSubmitHandler (evt) {
     evt.preventDefault(); 
 
-    document.querySelector('.profile__name').textContent = nameInput.value;
-    document.querySelector('.profile__description').textContent = jobInput.value;
+    profileName.textContent = nameInput.value;
+    profileDescription.textContent = jobInput.value;
     
     togglePopup ();
 

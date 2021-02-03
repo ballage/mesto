@@ -3,6 +3,12 @@
     margin: 0 auto;
 }
 
+@media screen and (max-width: 880px) {
+    .page {
+        width: 768px;
+    }
+} 
+
 @media screen and (max-width: 767px) {
     .page {
         width: 320px;

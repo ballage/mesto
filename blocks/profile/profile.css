@@ -1,6 +1,5 @@
 .profile {
     width: 100%;
-    min-height: 120px;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
@@ -14,6 +13,7 @@
     .profile {
                  
         flex-direction: column;
+        
                 
     }
 } 
