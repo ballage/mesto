@@ -45,6 +45,22 @@
                 </form>
             </div>
         </div>
+
+        <div class="popup-addcard">
+            <div class="popup__container">
+                <button class="popup__button-close" type="button" aria-label="Закрыть попап"></button>
+                <h3 class="popup__title">Новое место</h3>
+
+                <form class="popup__form" name="popup">
+                    <input type="text" class="popup__field popup__field_name" name="name" value="" placeholder="Название" required />
+                    <input type="text" class="popup__field popup__field_description" name="description" value="" placeholder="Ссылка на картинку" required />
+                    <button class="popup__button-save" type="submit" aria-label="Создать карточку">
+                        Создать
+                    </button>
+                </form>
+            </div>
+        </div>
+
         <template id="element">
             <article class="element">
                 <img class="element__image" />
