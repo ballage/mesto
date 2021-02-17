@@ -1,0 +1,9 @@
+.popup__openedtitle {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: white;
+    position: absolute;
+    left: 0;
+    bottom: -35px;
+}

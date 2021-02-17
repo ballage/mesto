@@ -43,7 +43,7 @@ function formSubmitHandler (evt) {
 }
 
 
-/* тут будем писать обработчик кнопки add */
+/* тут будем писать обработчик кнопки add - добавляем карточку */
 
 
 // это форма редактирования имени
@@ -63,6 +63,8 @@ const toggleAddPopup = function () { //Открываем-закрываем pop
     popupAdd.classList.toggle('popup_opened');
     
 }
+
+
 
 const justAddOpen = function  () {  // открываем пустой popup добавления карточки
     // очистить данные формы:
@@ -103,13 +105,33 @@ function formAddSubmitHandler (evt) {
 
 
     // добавляем на кнопку удаления слушателя и удаляем карточку по клику
-    elementItem.querySelector('.element__delete').addEventListener('click',function (evt) {
+elementItem.querySelector('.element__delete').addEventListener('click',function (evt) {
       
-      /*qqq = evt.target;
-      qqqItem = qqq.closest('.element');
-      qqqItem.remove();*/
-      //evt.target.classList.toggle('element__heart_active');
-    } );
+  deleteTarget = evt.target;
+  deleteItem = deleteTarget.closest('.element');
+  deleteItem.remove();
+ 
+} );
+
+// добавили слушателя на новую карточку
+
+elementItem.querySelector('.element__image').addEventListener('click',function (evt) {
+  const popupImageTarget = evt.target;
+  const popupImageSrc = popupImageTarget.src;
+  const popupImageItem = document.querySelector('.popup__openedimage');  //нашли картинку
+  popupImageItem.src = popupImageSrc; // поменяли у неё src на 
+
+  const popupImageTitle = document.querySelector('.popup__openedtitle');  //нашли title картинки
+  popupImageTitle.textContent = popupImageTarget.alt; // поменяли
+
+
+  
+  popupImage.classList.toggle('popup_opened');
+ 
+} );
+
+
+
 
     //добавляем в секцию
     elementsSection.prepend(elementItem);
@@ -126,6 +148,19 @@ function formAddSubmitHandler (evt) {
 
 
 
+/* обработчик кнопки закрытия всплывашки изображения  */ 
+
+const popupImage = document.querySelector('.popup_image');  // нашли div с popup-ом ()
+//const popupAddButton = document.querySelector('.profile__add-button');  //нашли кнопку "добавить"
+const popupImageCloseButton = popupImage.querySelector('.popup__button-photo-close');  // Кнопка закрыть 
+
+const toggleCloseImage = function () { //Открываем-закрываем popup
+  popupImage.classList.toggle('popup_opened');
+  
+}
+
+
+/* конец обработчика кнопки закрытия всплывашки изображения  */ 
 
 // объявляем массив с данными для формирования карточек
 const initialCards = [
@@ -171,11 +206,45 @@ initialCards.forEach(function (item) {
     elementItem.querySelector('.element__image').src = item.link;  //url
     elementItem.querySelector('.element__image').alt = item.name;  //alt
     elementItem.querySelector('.element__title').textContent = item.name;  //название карточки
+
+    //elementItem.querySelector('.element__popimage').href = item.link;  //href
     
       // добавляем на кнопку лайк слушателя и переключателя стиля
     elementItem.querySelector('.element__heart').addEventListener('click',function (evt) {
       evt.target.classList.toggle('element__heart_active');
     } );
+
+
+
+// добавляем на кнопку удаления слушателя и удаляем карточку по клику
+  elementItem.querySelector('.element__delete').addEventListener('click',function (evt) {
+      
+  deleteTarget = evt.target;
+  deleteItem = deleteTarget.closest('.element');
+  deleteItem.remove();
+ 
+} );
+
+
+// добавляем на изображение слушателя, чтобы открывать popup
+
+
+elementItem.querySelector('.element__image').addEventListener('click',function (evt) {
+  const popupImageTarget = evt.target;
+  const popupImageSrc = popupImageTarget.src;
+  const popupImageItem = document.querySelector('.popup__openedimage');  //нашли картинку
+  popupImageItem.src = popupImageSrc; // поменяли у неё src на 
+
+  const popupImageTitle = document.querySelector('.popup__openedtitle');  //нашли title картинки
+  popupImageTitle.textContent = popupImageTarget.alt; // поменяли
+
+
+  
+  popupImage.classList.toggle('popup_opened');
+ 
+} );
+
+
 
     //добавляем в секцию
     elementsSection.append(elementItem);
@@ -204,3 +273,6 @@ popupCloseButton.addEventListener('click', togglePopup); //клик на зак�
 formAddElement.addEventListener('submit', formAddSubmitHandler); //отправка формы сохранения карточки - добавить карточку
 popupAddButton.addEventListener('click', justAddOpen);  //клик на открытии (кнопка добавить)
 popupAddCloseButton.addEventListener('click', toggleAddPopup);  // закрыли форму, не добавляем карточку
+
+
+popupImageCloseButton.addEventListener('click', toggleCloseImage);
