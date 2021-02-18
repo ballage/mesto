@@ -117,7 +117,7 @@ const createCard = function (link, place) {  // функция создания 
   });
 
   // добавили слушателя на изображение (всплывашка картинки)
-  elementItem.querySelector('.element__image').addEventListener('click',function (evt) {
+  elementImageItem.addEventListener('click',function (evt) {
   const popupImageTarget = evt.target;
   const popupImageSrc = popupImageTarget.src;
 
