@@ -1,278 +1,185 @@
+// объявляем переменные
 
-// это форма редактирования имени
+// блок редактирования имени/профессии
+const popupEdit = document.querySelector('.popup_edit');  // нашли блок - div с popup-ом (редактирование имени/профессии)
+const popupCloseButton = popupEdit.querySelector('.popup__button-close');  // в этом блоке нашли кнопку закрыть - крестик (не сохраняем форму)
+const formElement = popupEdit.querySelector('.popup__form_edit'); // нашли форму (в блоке )
 
-const popupEdit = document.querySelector('.popup_edit');  // нашли div с popup-ом (редактирование имени)
-const popupOpenButton = document.querySelector('.profile__edit-button');  //нашли кнопку "редактировать"
-const popupCloseButton = popupEdit.querySelector('.popup__button-close');  // Кнопка закрыть (не сохраняем)
+const nameInput = formElement.querySelector('.popup__field_name'); // забрали в переменную то что ввёл юзер в качестве имени
+const jobInput = formElement.querySelector('.popup__field_description');// забрали в переменную то что ввёл юзер в качестве профессии
 
-// Находим форму в DOM
-const formElement = popupEdit.querySelector('.popup__form_edit');// нашли форму
-// Находим поля формы в DOM
+const profileName = document.querySelector('.profile__name'); // нашли в документе блок с именем, забрали его в переменную
+const profileDescription = document.querySelector('.profile__description'); // нашли в документе блок с профессией, забрали её в переменную
 
-const nameInput = formElement.querySelector('.popup__field_name');// Воспользуйтесь инструментом .querySelector()
-const jobInput = formElement.querySelector('.popup__field_description');// Воспользуйтесь инструментом .querySelector()
+const popupEditButton = document.querySelector('.profile__edit-button');  // нашли на странице кнопку "редактировать имя/профессию"
 
-const profileName = document.querySelector('.profile__name');
-const profileDescription = document.querySelector('.profile__description');
+// конец блока редактирования имени/профессии, объявили все переменные
 
-const togglePopup = function () { //Открываем-закрываем popup
-    popupEdit.classList.toggle('popup_opened');
-    
-}
+/* обработчик кнопки закрытия всплывашки изображения  */ 
 
-const justOpen = function  () {  // открываем popup и подгружаем в него данные со страницы
-    
+const popupImage = document.querySelector('.popup_image');  // нашли div с popup-ом ()
+const popupImageItem = document.querySelector('.popup__openedimage');  //нашли картинку
+const popupImageTitle = document.querySelector('.popup__openedtitle');  //нашли title картинки
+const popupImageCloseButton = popupImage.querySelector('.popup__button-photo-close');  // Кнопка закрыть изображение
 
-    nameInput.value = profileName.textContent;
-    jobInput.value = profileDescription.textContent;
-    
-    togglePopup ();
-}
+/* конец обработчик кнопки закрытия всплывашки изображения  */ 
 
-
-// Обработчик «отправки» формы, хотя пока
-// она никуда отправляться не будет
-function formSubmitHandler (evt) {
-    evt.preventDefault(); 
-
-    profileName.textContent = nameInput.value;
-    profileDescription.textContent = jobInput.value;
-    
-    togglePopup ();
-
-}
-
-
-/* тут будем писать обработчик кнопки add - добавляем карточку */
-
-
-// это форма редактирования имени
+/* переменные для  добавления карточки */
 
 const popupAdd = document.querySelector('.popup_addcard');  // нашли div с popup-ом (добавление карточки)
 const popupAddButton = document.querySelector('.profile__add-button');  //нашли кнопку "добавить"
 const popupAddCloseButton = popupAdd.querySelector('.popup__buttonadd-close');  // Кнопка закрыть (не сохраняем)
 
-// Находим форму в DOM
-const formAddElement = popupAdd.querySelector('.popup__form_add');// нашли форму
+const formAddElement = popupAdd.querySelector('.popup__form_add');// нашли форму добавления карточки
+const elementsSection = document.querySelector('.elements'); //секция, куда будем вставлять карточки
 
-// Находим поля формы в DOM
-
-
-
-const toggleAddPopup = function () { //Открываем-закрываем popup
-    popupAdd.classList.toggle('popup_opened');
-    
-}
-
-
-
-const justAddOpen = function  () {  // открываем пустой popup добавления карточки
-    // очистить данные формы:
-
-    
-    toggleAddPopup ();
-}
-
-
-// Обработчик «отправки» формы, хотя пока
-// она никуда отправляться не будет
-function formAddSubmitHandler (evt) {
-    evt.preventDefault(); 
-
-//тут добавляем карточку
-
-    const elementTemplate = document.querySelector('#element').content; //выбираем шаблон и забираем его содержимое
-    const elementsSection = document.querySelector('.elements'); //секция, куда будем вставлять карточки
-    const elementItem = elementTemplate.querySelector('.element').cloneNode(true);  //клонировали
-
-    //наполняем
-
-    const placeInput = formAddElement.querySelector('.popup__field_place');// Воспользуйтесь инструментом .querySelector()
-    const linkInput = formAddElement.querySelector('.popup__field_link');// Воспользуйтесь инструментом .querySelector()
-       
-
-    elementItem.querySelector('.element__image').src = linkInput.value;  //url
-    elementItem.querySelector('.element__image').alt = placeInput.value;  //alt
-    elementItem.querySelector('.element__title').textContent = placeInput.value;  //название карточки
-
-    // добавляем на кнопку лайк слушателя и переключатель
-    elementItem.querySelector('.element__heart').addEventListener('click',function (evt) {
-      
-      evt.target.classList.toggle('element__heart_active');
-      
-    } );
-
-
-
-    // добавляем на кнопку удаления слушателя и удаляем карточку по клику
-elementItem.querySelector('.element__delete').addEventListener('click',function (evt) {
-      
-  deleteTarget = evt.target;
-  deleteItem = deleteTarget.closest('.element');
-  deleteItem.remove();
- 
-} );
-
-// добавили слушателя на новую карточку
-
-elementItem.querySelector('.element__image').addEventListener('click',function (evt) {
-  const popupImageTarget = evt.target;
-  const popupImageSrc = popupImageTarget.src;
-  const popupImageItem = document.querySelector('.popup__openedimage');  //нашли картинку
-  popupImageItem.src = popupImageSrc; // поменяли у неё src на 
-
-  const popupImageTitle = document.querySelector('.popup__openedtitle');  //нашли title картинки
-  popupImageTitle.textContent = popupImageTarget.alt; // поменяли
-
-
-  
-  popupImage.classList.toggle('popup_opened');
- 
-} );
-
-
-
-
-    //добавляем в секцию
-    elementsSection.prepend(elementItem);
-    
-    toggleAddPopup ();
-
-}
-
-
-
-
-
-/* закончили обрабатывать add */
-
-
-
-/* обработчик кнопки закрытия всплывашки изображения  */ 
-
-const popupImage = document.querySelector('.popup_image');  // нашли div с popup-ом ()
-//const popupAddButton = document.querySelector('.profile__add-button');  //нашли кнопку "добавить"
-const popupImageCloseButton = popupImage.querySelector('.popup__button-photo-close');  // Кнопка закрыть 
-
-const toggleCloseImage = function () { //Открываем-закрываем popup
-  popupImage.classList.toggle('popup_opened');
-  
-}
-
-
-/* конец обработчика кнопки закрытия всплывашки изображения  */ 
 
 // объявляем массив с данными для формирования карточек
 const initialCards = [
-    {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-  ]; 
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+]; 
 
+// Блок с функциями
 
+const togglePopup = function (popup) {  // функция открытия/закрытия любого popup  
+  popup.classList.toggle('popup_opened');  
+}
 
-
-
-// обходим весь массив, формируя карточки
-
-initialCards.forEach(function (item) {
-
-    const elementTemplate = document.querySelector('#element').content; //выбираем шаблон и забираем его содержимое
-    const elementsSection = document.querySelector('.elements'); //секция, куда будем вставлять карточки
-    const elementItem = elementTemplate.querySelector('.element').cloneNode(true);  //клонировали
-
-    //наполняем
-    elementItem.querySelector('.element__image').src = item.link;  //url
-    elementItem.querySelector('.element__image').alt = item.name;  //alt
-    elementItem.querySelector('.element__title').textContent = item.name;  //название карточки
-
-    //elementItem.querySelector('.element__popimage').href = item.link;  //href
+const popupEditOpen = function  () {  // открываем popup с редактированием имени/профессии и подгружаем в него данные со страницы
     
-      // добавляем на кнопку лайк слушателя и переключателя стиля
-    elementItem.querySelector('.element__heart').addEventListener('click',function (evt) {
-      evt.target.classList.toggle('element__heart_active');
-    } );
+  nameInput.value = profileName.textContent;  //Имя: в форму из DOM
+  jobInput.value = profileDescription.textContent;  //Профессия:  в форму из DOM
+  togglePopup(popupEdit); //открыли popup    
+}
 
 
 
-// добавляем на кнопку удаления слушателя и удаляем карточку по клику
-  elementItem.querySelector('.element__delete').addEventListener('click',function (evt) {
-      
-  deleteTarget = evt.target;
-  deleteItem = deleteTarget.closest('.element');
-  deleteItem.remove();
- 
-} );
+const formEditSubmitHandler = function (evt) {  // отправлена форма сохранения имени/профессии
+    evt.preventDefault(); // Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
+    profileName.textContent = nameInput.value; //Имя: из формы в DOM
+    profileDescription.textContent = jobInput.value;//Профессия: из формы в DOM
+    togglePopup (popupEdit);  //закрыли popup
+}
 
 
-// добавляем на изображение слушателя, чтобы открывать popup
+const popupAddOpen = function  () {  // открываем пустой popup добавления карточки
+    // можно бы очистить данные формы:
+    togglePopup(popupAdd);
+}
 
 
-elementItem.querySelector('.element__image').addEventListener('click',function (evt) {
+const createCard = function (link, place) {  // функция создания карточки  
+
+  const elementTemplate = document.querySelector('#element').content; //выбираем шаблон и забираем его содержимое
+  const elementItem = elementTemplate.querySelector('.element').cloneNode(true);  //клонировали
+
+  const elementImageItem = elementItem.querySelector('.element__image');
+  
+  elementImageItem.src = link;  //url изображения
+  elementImageItem.alt = place;  //alt изображения
+  elementItem.querySelector('.element__title').textContent = place;  //название карточки
+    
+
+  // добавляем на кнопку лайк слушателя и переключатель
+  elementItem.querySelector('.element__heart').addEventListener('click',function (evt) {
+    evt.target.classList.toggle('element__heart_active');    
+  });
+
+
+  // добавляем на кнопку удаления слушателя и удаляем карточку по клику
+  elementItem.querySelector('.element__delete').addEventListener('click',function (evt) {    
+    deleteTarget = evt.target;
+    deleteItem = deleteTarget.closest('.element');
+    deleteItem.remove();
+  });
+
+  // добавили слушателя на изображение (всплывашка картинки)
+  elementImageItem.addEventListener('click',function (evt) {
   const popupImageTarget = evt.target;
   const popupImageSrc = popupImageTarget.src;
-  const popupImageItem = document.querySelector('.popup__openedimage');  //нашли картинку
-  popupImageItem.src = popupImageSrc; // поменяли у неё src на 
 
-  const popupImageTitle = document.querySelector('.popup__openedtitle');  //нашли title картинки
-  popupImageTitle.textContent = popupImageTarget.alt; // поменяли
+  popupImageItem.src = popupImageSrc; // поменяли у неё src на текущий
+  popupImageTitle.textContent = popupImageTarget.alt; // поменяли alt
 
-
-  
-  popupImage.classList.toggle('popup_opened');
- 
-} );
+  togglePopup(popupImage);  //открыли popup
+  });
 
 
+  return elementItem;  //вернули карточку
 
-    //добавляем в секцию
-    elementsSection.append(elementItem);
+}  // конец функции создания карточки
+
+
+
+const formAddSubmitHandler = function (evt) {
+  evt.preventDefault(); // Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
+
+  const placeInput = formAddElement.querySelector('.popup__field_place');  //выцепили данные из полей формы
+  const linkInput = formAddElement.querySelector('.popup__field_link');
+
+  const elementItem = createCard(linkInput.value, placeInput.value);  //вызываем функцию добавления, передаём ей аргументы из формы
+
+  elementsSection.prepend(elementItem); //добавляем в начало секции
+
+  togglePopup(popupAdd); // закрываем popup
+
+}  // конец добавления карточки
+
+// конец блока с описанием функций
+
+
+// при загрузке страницы обходим весь массив, формируя карточки
+
+initialCards.forEach(function (item) {
+  const elementItem = createCard(item.link, item.name);
+  elementsSection.append(elementItem);    //добавляем в конец секции
 });
-
-
-
-
-
-
-
-
-
-
-
 
 
 // Прикрепляем обработчики
 
-formElement.addEventListener('submit', formSubmitHandler); //отправка формы сохранения Жак-Ив кусто
-popupOpenButton.addEventListener('click', justOpen); //клик на открытии (кнопка редактирования)
-popupCloseButton.addEventListener('click', togglePopup); //клик на закрытии формы (крестик)
+formElement.addEventListener('submit', formEditSubmitHandler); //отправка формы сохранения Имени/Профессии
+popupEditButton.addEventListener('click', popupEditOpen); //клик на открытии (кнопка редактирования Имени/Профессии)
 
+
+popupCloseButton.addEventListener('click', function () {
+  togglePopup(popupEdit); //клик на закрытии формы редактирования (крестик)
+});
 
 
 formAddElement.addEventListener('submit', formAddSubmitHandler); //отправка формы сохранения карточки - добавить карточку
-popupAddButton.addEventListener('click', justAddOpen);  //клик на открытии (кнопка добавить)
-popupAddCloseButton.addEventListener('click', toggleAddPopup);  // закрыли форму, не добавляем карточку
+
+popupAddButton.addEventListener('click', popupAddOpen);  //клик на кнопке добавить карточку
 
 
-popupImageCloseButton.addEventListener('click', toggleCloseImage);
+popupAddCloseButton.addEventListener('click', function () {
+  togglePopup(popupAdd); // закрыли форму (крестик), не добавляем карточку
+});
+
+
+popupImageCloseButton.addEventListener('click', function () {
+  togglePopup(popupImage); // закрыли всплывашку с картинкой
+});
