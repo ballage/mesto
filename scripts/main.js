@@ -31,7 +31,8 @@ const popupAddButton = document.querySelector('.profile__add-button');  //наш
 const formAddElement = popupAdd.querySelector('.popup__form_add');// нашли форму добавления карточки
 const elementsSection = document.querySelector('.elements'); //секция, куда будем вставлять карточки
 
-
+const addPlace = formAddElement.querySelector('.popup__field_place');  //нашли значения полей ввода
+const addLink =  formAddElement.querySelector('.popup__field_link');
 
 
 
@@ -222,10 +223,7 @@ const ESCAddClose = function (evt) {  //нажата кнопка Esc
 const formAddSubmitHandler = function (evt) {
   evt.preventDefault(); // Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
 
-  const placeInput = formAddElement.querySelector('.popup__field_place');  //выцепили данные из полей формы
-  const linkInput = formAddElement.querySelector('.popup__field_link');
-
-  const elementItem = createCard(linkInput.value, placeInput.value);  //вызываем функцию добавления, передаём ей аргументы из формы
+  const elementItem = createCard(addLink.value, addPlace.value);  //вызываем функцию добавления, передаём ей аргументы из формы
 
   elementsSection.prepend(elementItem); //добавляем в начало секции
 
@@ -235,6 +233,8 @@ const formAddSubmitHandler = function (evt) {
 
 
 const popupAddOpen = function  () {  // открываем пустой popup добавления карточки
+  addPlace.value = '';  //обнулили значение полей
+  addLink.value = '';
   popupAdd.addEventListener('click', callbackForAdd);      // закрыли форму (крестик), не добавляем карточку     
   document.addEventListener('keydown', ESCAddClose); // вешаем слушателя на esc
   formAddElement.addEventListener('submit', formAddSubmitHandler); //отправка формы добавления карточки
