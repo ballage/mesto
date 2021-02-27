@@ -27,6 +27,7 @@ const popupImageTitle = document.querySelector('.popup__openedtitle');  //наш
 
 const popupAdd = document.querySelector('.popup_addcard');  // нашли div с popup-ом (добавление карточки)
 const popupAddButton = document.querySelector('.profile__add-button');  //нашли кнопку "добавить"
+const popupAddSave = document.querySelector('.popup__button-save_add');  //нашли кнопку "сохранить" в popup "добавить карточку"
 
 const formAddElement = popupAdd.querySelector('.popup__form_add');// нашли форму добавления карточки
 const elementsSection = document.querySelector('.elements'); //секция, куда будем вставлять карточки
@@ -34,62 +35,39 @@ const elementsSection = document.querySelector('.elements'); //секция, к�
 const addPlace = formAddElement.querySelector('.popup__field_place');  //нашли значения полей ввода
 const addLink =  formAddElement.querySelector('.popup__field_link');
 
+const elementTemplate = document.querySelector('#element').content; //выбираем шаблон и забираем его содержимое
 
+const ESC_CODE = 'Escape';
 
-// объявляем массив с данными для формирования карточек
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-]; 
 
 // Блок с функциями
 
-const togglePopup = function (popup) {  // функция открытия/закрытия любого popup  
-  popup.classList.toggle('popup_opened');  
+
+const togglePopup = function (popup) { // функция открытия/закрытия любого popup  
+  if (!popup.classList.contains('popup_opened')) {  //если popup закрыт (нет класса popup_opened)
+      document.addEventListener('keydown', closeByEsc);
+      document.addEventListener('mousedown', closeByOverlayAndButtonClick);
+  } else {
+      document.removeEventListener('keydown', closeByEsc);  // иначе убираем слушателей
+      document.removeEventListener('mousedown', closeByOverlayAndButtonClick);
+  }
+  popup.classList.toggle('popup_opened');
 }
 
-
-const removeListenersFromImageAndClose = function (evt) {  // удаляем слушателей и закрываем popup
-  document.removeEventListener('keydown', ESCImageClose);  //удаляем слушателей с клавиатуры
-  evt.target.removeEventListener('click', callbackForImage);  //удаляем слушателя с мыши
-  
-  togglePopup(popupImage); //закрыли popup    
-}
-
-
-const ESCImageClose = function (evt) {  //нажата кнопка Esc
-  if (evt.key == 'Escape') {      
-    removeListenersFromImageAndClose(evt);
+function closeByEsc(evt) {
+  if (evt.key === ESC_CODE) {
+    const openedPopup = document.querySelector('.popup_opened');
+    togglePopup(openedPopup); 
   }
 }
 
-const callbackForImage = function (evt) {  //клик по крестику или оверлею
-  if (evt.target.classList.contains('popup_image') || evt.target.classList.contains('popup__button-close')) {
-    removeListenersFromImageAndClose(evt);
-  }  
+function closeByOverlayAndButtonClick(evt) {
+  if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__button-close')) {
+    const openedPopup = document.querySelector('.popup_opened');
+    togglePopup(openedPopup); 
+  }
 }
+
 
 
 const popupImageOnCreate = function (evt) {  //создаем изображение и вешаем слушатели
@@ -98,33 +76,24 @@ const popupImageOnCreate = function (evt) {  //создаем изображен
 
   popupImageItem.src = popupImageSrc; // поменяли у неё src на текущий
   popupImageTitle.textContent = popupImageTarget.alt; // поменяли alt
-  
-  popupImage.addEventListener('click', callbackForImage);  // вешаем слушателя на оверлей и крестик  
-  document.addEventListener('keydown', ESCImageClose); // вешаем слушателя на esc
+    
   togglePopup(popupImage);  //открыли popup
-
-  
 }
 
 
-
 const createCard = function (link, place) {  // функция создания карточки  
-
-  const elementTemplate = document.querySelector('#element').content; //выбираем шаблон и забираем его содержимое
-  const elementItem = elementTemplate.querySelector('.element').cloneNode(true);  //клонировали
-
+  
+  const elementItem = elementTemplate.querySelector('.element').cloneNode(true);  //клонировали шаблон карточки из шаблона (elementTemplate объявлен в начале файла)
   const elementImageItem = elementItem.querySelector('.element__image');
   
   elementImageItem.src = link;  //url изображения
   elementImageItem.alt = place;  //alt изображения
   elementItem.querySelector('.element__title').textContent = place;  //название карточки
     
-
   // добавляем на кнопку лайк слушателя и переключатель
   elementItem.querySelector('.element__heart').addEventListener('click',function (evt) {
     evt.target.classList.toggle('element__heart_active');    
   });
-
 
   // добавляем на кнопку удаления слушателя и удаляем карточку по клику
   elementItem.querySelector('.element__delete').addEventListener('click',function (evt) {    
@@ -157,68 +126,28 @@ initialCards.forEach(function (item) {
 /* БОЛЬШОЙ БЛОК СЛУШАТЕЛЕЙ */
 
 
-/* слушатели на popup редактирования имени/профессии */
-
-const removeListenersFromEditAndClose = function (evt) {  // удаляем слушателей и закрываем popup
-  document.removeEventListener('keydown',ESCEditClose);  //удаляем слушателей с клавиатуры
-  evt.target.removeEventListener('click', callbackForEdit);  //удаляем слушателя с мыши
-  evt.target.removeEventListener('click', formEditSubmitHandler);   //удаляем слушателя с кнопки сохранить
-  togglePopup(popupEdit); //закрыли popup    
-}
-
-
-const callbackForEdit = function (evt) {  //клик по крестику или оверлею
-  if (evt.target.classList.contains('popup_edit') || evt.target.classList.contains('popup__buttonedit-close')) {
-    removeListenersFromEditAndClose(evt);   
-  }  
-}
-
-const ESCEditClose = function (evt) {  //нажата кнопка Esc
-  if (evt.key == 'Escape') {      
-    removeListenersFromEditAndClose(evt);
-  }
-}
-
 const formEditSubmitHandler = function (evt) {  // отправлена форма сохранения имени/профессии
   evt.preventDefault(); // Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
   profileName.textContent = nameInput.value; //Имя: из формы в DOM
   profileDescription.textContent = jobInput.value;//Профессия: из формы в DOM
-  removeListenersFromEditAndClose(evt);
+  //removeListenersFromEditAndClose(evt);
+
+  togglePopup(popupEdit); //закрыли popup    
+
 }
+
+formElement.addEventListener('submit', formEditSubmitHandler); //отправка формы сохранения Имени/Профессии
 
 const popupEditOpen = function  (evt) {  // открываем popup с редактированием имени/профессии и подгружаем в него данные со страницы
   nameInput.value = profileName.textContent;  //Имя: в форму из DOM
   jobInput.value = profileDescription.textContent;  //Профессия:  в форму из DOM
-  popupEdit.addEventListener('click', callbackForEdit);  // повесили слушателя на оверлей popup-edit
-  document.addEventListener('keydown', ESCEditClose); // вешаем слушателя на esc
-  formElement.addEventListener('submit', formEditSubmitHandler); //отправка формы сохранения Имени/Профессии
-  
+    
   togglePopup(popupEdit); //открыли popup    
 }
 
+
+
 popupEditButton.addEventListener('click', popupEditOpen); // слушатель на кнопке редактирования Имени/Профессии
-
-/* слушатели на popup кнопки добавить карточку */
-
-const removeListenersFromAddAndClose = function (evt) {  // удаляем слушателей и закрываем popup
-  document.removeEventListener('keydown',ESCAddClose);  //удаляем слушателей с клавиатуры
-  evt.target.removeEventListener('click', callbackForAdd);  //удаляем слушателя с мыши
-  evt.target.removeEventListener('click', formAddSubmitHandler);   //удаляем слушателя с кнопки сохранить
-  togglePopup(popupAdd); //закрыли popup    
-}
-
-
-const callbackForAdd = function (evt) {  //клик по крестику или оверлею
-  if (evt.target.classList.contains('popup_addcard') || evt.target.classList.contains('popup__buttonadd-close')) {
-    removeListenersFromAddAndClose(evt);
-  }  
-}
-
-const ESCAddClose = function (evt) {  //нажата кнопка Esc
-  if (evt.key == 'Escape') {      
-    removeListenersFromAddAndClose(evt);
-  }
-}
 
 const formAddSubmitHandler = function (evt) {
   evt.preventDefault(); // Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
@@ -227,18 +156,24 @@ const formAddSubmitHandler = function (evt) {
 
   elementsSection.prepend(elementItem); //добавляем в начало секции
 
-  removeListenersFromAddAndClose(evt);
+  togglePopup(popupAdd); //закрыли popup    
 
+  
 }  // конец добавления карточки
+
+formAddElement.addEventListener('submit', formAddSubmitHandler); //отправка формы добавления карточки
 
 
 const popupAddOpen = function  () {  // открываем пустой popup добавления карточки
   addPlace.value = '';  //обнулили значение полей
   addLink.value = '';
-  popupAdd.addEventListener('click', callbackForAdd);      // закрыли форму (крестик), не добавляем карточку     
-  document.addEventListener('keydown', ESCAddClose); // вешаем слушателя на esc
-  formAddElement.addEventListener('submit', formAddSubmitHandler); //отправка формы добавления карточки
+
+  popupAddSave.classList.add("popup__button-save_inactive");  // деактивируем кнопку submit формы добавления карточки
+  popupAddSave.setAttribute("disabled", "disabled");
+  
   togglePopup(popupAdd);  // открыли popup
 }
 
 popupAddButton.addEventListener('click', popupAddOpen);  //клик на кнопке добавить карточку
+
+
