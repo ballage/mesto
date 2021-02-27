@@ -72,6 +72,9 @@ const showInputError = (inputElement, errorMessage) => {
       setEventListeners(formElement, selectors.inputSelector);
     });
   };
+
+
+
   
   enableValidation({
     formSelector: '.popup__form',
