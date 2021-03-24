@@ -60,7 +60,7 @@ export class Card {
     }
 
     _handleImageClick() {  //создаем изображение и вешаем слушатели
-      const popupImage = document.querySelector('.popup__image');  // нашли div с popup-ом ()
+      const popupImage = document.querySelector('.popup_image');  // нашли div с popup-ом ()
       const popupImageItem = document.querySelector('.popup__imageopened');  //нашли картинку  -- не совсем понял комментарий "переименовать согласно БЭМ", это же не модификатор, вроде всё по БЭМ? 
       const popupImageTitle = document.querySelector('.popup__openedtitle');  //нашли title картинки
 
