@@ -1,4 +1,4 @@
-import {togglePopup, closeByEsc, closeByOverlayAndButtonClick} from './index.js'
+import {togglePopup} from './index.js'
 
 export class Card {
     constructor (data, selector) {
@@ -60,13 +60,15 @@ export class Card {
     }
 
     _handleImageClick() {  //создаем изображение и вешаем слушатели
-      const popupImage = document.querySelector('.popup_image');  // нашли div с popup-ом ()
-      const popupImageItem = document.querySelector('.popup__openedimage');  //нашли картинку
+      const popupImage = document.querySelector('.popup__image');  // нашли div с popup-ом ()
+      const popupImageItem = document.querySelector('.popup__image_opened');  //нашли картинку
       const popupImageTitle = document.querySelector('.popup__openedtitle');  //нашли title картинки
+
+      const popupImageElement = this._element.querySelector('.element__image');
     
       
-      const popupImageSrc = this._element.querySelector('.element__image').src;
-      const popupImageAlt = this._element.querySelector('.element__image').alt;
+      const popupImageSrc = popupImageElement.src;
+      const popupImageAlt = popupImageElement.alt;
       
 
       popupImageItem.src = popupImageSrc; // поменяли у неё src на текущий

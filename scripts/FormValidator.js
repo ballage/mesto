@@ -1,5 +1,4 @@
 
-
 export class FormValidator {
     constructor (selectors, currentFormElement) {
         this._formSelector = selectors.formSelector;
@@ -34,7 +33,7 @@ export class FormValidator {
             
             const handleInput = () => {
               
-              this._checkInputValidity(formElement, inputElement);
+              this._checkInputValidity(inputElement);
               this._toggleButtonState(inputList, buttonElement);
             };
         
@@ -61,14 +60,15 @@ export class FormValidator {
         }
       };
 
-    _checkInputValidity(formElement, inputElement) {
+    _checkInputValidity(inputElement) {
         const isInputNotValid = !inputElement.validity.valid;
       
         if (isInputNotValid) {
           const errorMessage = inputElement.validationMessage;
       
           this._showInputError(inputElement, errorMessage);
-        } else {
+        } 
+        else {
           this._hideInputError(inputElement);
         }
       };
