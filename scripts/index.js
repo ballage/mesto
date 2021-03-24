@@ -26,32 +26,29 @@ const elementsSection = document.querySelector('.elements'); //секция, к�
 const ESC_CODE = 'Escape';
 
 
+export const openPopup = function (popup) { // функция открытия popup
+  document.addEventListener('keydown', closeByEsc);
+  document.addEventListener('mousedown', closeByOverlayAndButtonClick);
+  popup.classList.add('popup_opened');
+}
 
-export const togglePopup = function (popup) { // функция открытия/закрытия любого popup  
-  
-    if (!popup.classList.contains('popup_opened')) {  //если popup закрыт (нет класса popup_opened)
-      document.addEventListener('keydown', closeByEsc);
-      document.addEventListener('mousedown', closeByOverlayAndButtonClick);
-  } else {
-      document.removeEventListener('keydown', closeByEsc);  // иначе убираем слушателей
-      document.removeEventListener('mousedown', closeByOverlayAndButtonClick);
-  }
-  popup.classList.toggle('popup_opened');
-  
-  }
-  
-  
+const closePopup = function (popup) { // функция закрытия popup
+  document.removeEventListener('keydown', closeByEsc);  
+  document.removeEventListener('mousedown', closeByOverlayAndButtonClick);
+  popup.classList.remove('popup_opened');  
+}
+
 function closeByEsc(evt) {
     if (evt.key === ESC_CODE) {
         const openedPopup = document.querySelector('.popup_opened');
-        togglePopup(openedPopup); 
+        closePopup(openedPopup); 
       }
     }
   
 function closeByOverlayAndButtonClick(evt) {
     if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__button-close')) {
         const openedPopup = document.querySelector('.popup_opened');
-        togglePopup(openedPopup); 
+        closePopup(openedPopup); 
       }
     }
 
@@ -61,7 +58,7 @@ const popupAddOpen = function  () {  // открываем пустой popup д
     popupAddSave.classList.add(validateSettings.inactiveButtonClass);  // деактивируем кнопку submit формы добавления карточки    
     popupAddSave.setAttribute("disabled", "disabled");
     
-    togglePopup(popupAdd);  // открыли popup
+    openPopup(popupAdd);  // открыли popup
   }
   
 
@@ -70,7 +67,7 @@ const popupEditOpen = function () {  // открываем popup с редакт
     nameInput.value = profileName.textContent;  //Имя: в форму из DOM
     jobInput.value = profileDescription.textContent;  //Профессия:  в форму из DOM
       
-    togglePopup(popupEdit); //открыли popup    
+    openPopup(popupEdit); //открыли popup    
   }
 
 
@@ -80,7 +77,7 @@ const formEditSubmitHandler = function (evt) {  // отправлена форм
     profileDescription.textContent = jobInput.value;//Профессия: из формы в DOM
     //removeListenersFromEditAndClose(evt);
   
-    togglePopup(popupEdit); //закрыли popup    
+    closePopup(popupEdit); //закрыли popup    
   
   }
 
@@ -92,16 +89,16 @@ const formAddSubmitHandler = function (evt) {
     const elementItem = card.generateCard();
     elementsSection.prepend(elementItem); //добавляем в начало секции
   
-    togglePopup(popupAdd); //закрыли popup  
+    closePopup(popupAdd); //закрыли popup  
     
   } 
   
   //слушатели
 
-  popupAddButton.addEventListener('click', popupAddOpen);  // слушатель на клик по кнопке добавления карточки
-  popupEditButton.addEventListener('click', popupEditOpen); // слушатель на кнопке редактирования Имени/Профессии
-  formElement.addEventListener('submit', formEditSubmitHandler); // отправка формы сохранения Имени/Профессии
-  formAddElement.addEventListener('submit', formAddSubmitHandler); // отправка формы добавления карточки
+popupAddButton.addEventListener('click', popupAddOpen);  // слушатель на клик по кнопке добавления карточки
+popupEditButton.addEventListener('click', popupEditOpen); // слушатель на кнопке редактирования Имени/Профессии
+formElement.addEventListener('submit', formEditSubmitHandler); // отправка формы сохранения Имени/Профессии
+formAddElement.addEventListener('submit', formAddSubmitHandler); // отправка формы добавления карточки
   
   
 /* проходим по массиву данных, создаём карточки, заполняем страницу */

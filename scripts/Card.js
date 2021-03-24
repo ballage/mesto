@@ -1,4 +1,4 @@
-import {togglePopup} from './index.js'
+import {openPopup} from './index.js'
 
 export class Card {
     constructor (data, selector) {
@@ -74,7 +74,7 @@ export class Card {
       popupImageItem.src = popupImageSrc; // поменяли у неё src на текущий
       popupImageTitle.textContent = popupImageAlt; // поменяли alt
         
-      togglePopup(popupImage);  //открыли popup
+      openPopup(popupImage);  //открыли popup
 
     }
    
