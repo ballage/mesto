@@ -1,5 +1,6 @@
 import {initialCards, validateSettings} from './data.js'
 import {Card} from './Card.js'
+import {Section} from './Section.js'
 import {FormValidator} from './FormValidator.js'
 
 
@@ -103,12 +104,20 @@ formAddElement.addEventListener('submit', formAddSubmitHandler); // отправ
   
 /* проходим по массиву данных, создаём карточки, заполняем страницу */
 
-initialCards.forEach((item) => {
-    const card = new Card(item, '#element');
+const cardsList = new Section({
+  data: initialCards,
+  renderer: (cardItem) => {
+    const card = new Card(cardItem, '#element');
     const elementItem = card.generateCard();
-    
-    elementsSection.append(elementItem);  //добавляем в конец секции
-})
+    cardsList.addItem(elementItem);
+  },
+},
+
+'.elements' //containerSelector
+);
+
+cardsList.renderItems();
+
 
 //включаем валидацию форм
 
